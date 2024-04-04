@@ -1,0 +1,57 @@
+﻿@using SocialNetwork.Core.Application.ViewModels.Post;
+@model PostSaveViewModel;
+@{
+    bool editMode;
+    if (Model != null)
+    {
+        editMode = Model.Id == 0 ? false : true;
+    }
+    else
+    {
+        editMode = false;
+    }
+    ViewData["Title"] = "Create";
+}
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        @(editMode ? "Editando Publicacion" : "Creando Publicacion") 
+                    </div>
+                    <div class="card-body">
+                        <form method="post" asp-controller="Post" asp-action="@(editMode ? "Update" : "Create")" enctype="multipart/form-data">
+                            <div class="mb-3">
+                                <label asp-for="Description" class="form-label">Contenido</label>
+                                <textarea class="form-control" asp-for="Description" rows="4"></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+
+                            </div>
+                            <div class="mb-3">
+                                <label asp-for="VideoUrl" class="form-label">Link del video</label>
+                                <input class="form-control" asp-for="VideoUrl" rows="4">
+                            </div>
+                            <div class="mb-3">
+                                <label asp-for="File" class="form-label">Link del video</label>
+                                <input class="form-control" type="file" asp-for="File" rows="4">
+                            </div>
+                             <div class="mb-3">
+                                <input class="form-control" type="hidden" asp-for="Id" rows="4">
+                            </div>
+                            <div class="mb-3">
+                                <input class="form-control" type="hidden" asp-for="UserId" rows="4">
+                            </div>
+                            <div class="text-end">
+                                <button type="submit" class="btn btn-primary">Publicar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+

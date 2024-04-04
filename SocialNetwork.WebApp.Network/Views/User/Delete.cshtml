@@ -1,0 +1,30 @@
+﻿@using SocialNetwork.Core.Application.ViewModels.User;
+@model UserSaveViewModel;
+@{
+    ViewData["Title"] = "Delete";
+}
+
+
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    Quieres eliminar esta cuenta?
+                </div>
+                <div class="card-body">
+                    <form method="post" asp-controller="User" asp-action="DeletePost">
+                        <div class="mb-3">
+                            <input class="form-control" type="hidden" asp-for="Id" rows="4">
+                        </div>
+                        <div class="text-end">
+                            <button type="submit" class="btn btn-danger">Eliminar</button>
+                            <a asp-controller="User" asp-action="Profile" class="btn btn-secondary">Volver</a>
+                        </div>                        
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

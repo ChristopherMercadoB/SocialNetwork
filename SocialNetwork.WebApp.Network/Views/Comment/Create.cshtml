@@ -1,0 +1,163 @@
+﻿@using SocialNetwork.Core.Application.ViewModels.Comment;
+@using SocialNetwork.Core.Application.ViewModels.User;
+@using SocialNetwork.Core.Application.ViewModels.Post;
+@model CommentSaveViewModel;
+@{
+    List<CommentViewModel> comments = ViewBag.Comments;
+    UserSaveViewModel user = ViewBag.User;
+    PostSaveViewModel post = ViewBag.Post;
+    ViewData["Title"] = "Comment";
+}
+
+<div class="row profile-body">
+    <!-- left wrapper start -->
+    <div class="d-none d-md-block col-md-4 col-xl-3 left-wrapper">
+        <div class="card rounded">
+            <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between mb-2">
+                    <div class="dropdown">
+                        <button class="btn p-0" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal icon-lg text-muted pb-3px">
+                                <circle cx="12" cy="12" r="1"></circle>
+                                <circle cx="19" cy="12" r="1"></circle>
+                                <circle cx="5" cy="12" r="1"></circle>
+                            </svg>
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item d-flex align-items-center" href="#">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 icon-sm mr-2">
+                                    <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
+                                </svg> <span class="">Edit</span>
+                            </a>
+                            <a class="dropdown-item d-flex align-items-center" href="#">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-git-branch icon-sm mr-2">
+                                    <line x1="6" y1="3" x2="6" y2="15"></line>
+                                    <circle cx="18" cy="6" r="3"></circle>
+                                    <circle cx="6" cy="18" r="3"></circle>
+                                    <path d="M18 9a9 9 0 0 1-9 9"></path>
+                                </svg> <span class="">Update</span>
+                            </a>
+                            <a class="dropdown-item d-flex align-items-center" href="#">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye icon-sm mr-2">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                    <circle cx="12" cy="12" r="3"></circle>
+                                </svg> <span class="">View all</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Posts-->
+
+    <div class="col-md-8 col-xl-6 middle-wrapper">
+        <div class="row">
+            <div class="col-md-12 grid-margin">
+                <div class="card rounded">
+                            <div class="card-header">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div class="d-flex align-items-center">
+                                        <img class="img-xs rounded-circle" src="@user.ImageUrl" alt="">
+                                        <div class="ml-2">
+                                        <p>@user.Username</p>
+                                        </div>
+                                    </div>
+                                    <div class="dropdown">
+                                        <a class="btn p-0" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal icon-lg pb-3px">
+                                                <circle cx="12" cy="12" r="1"></circle>
+                                                <circle cx="19" cy="12" r="1"></circle>
+                                                <circle cx="5" cy="12" r="1"></circle>
+                                            </svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <p class="mb-3 tx-14">@post.Description</p>
+                            @if (post.ImageUrl != null && post.VideoUrl == null)
+                                {
+                                <img class="img-fluid" src="@post.ImageUrl" alt="">
+                                }
+                            else if (post.VideoUrl != null && post.ImageUrl == null)
+                                {
+                                <iframe width="560" height="315" src="@post.VideoUrl" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                                }
+                            else if (post.VideoUrl == null && post.ImageUrl == null)
+                                {
+                                    <p></p>
+                                }
+                            </div>
+                    
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- middle wrapper end -->
+    <!-- right wrapper start -->
+    <div class="d-none d-xl-block col-xl-3 right-wrapper">
+        <div class="row">
+            @if (comments == null || comments.Count < 0)
+            {
+                <h6>No hay Comentarios</h6>
+            }
+            else
+            {
+
+
+                <div class="col-md-12 grid-margin">
+                    <div class="card rounded">
+                        <div class="card-body">
+                            <h6 class="card-title">Comentarios</h6>
+                            @foreach (var item in comments)
+                            {
+                                <div class="d-flex justify-content-between mb-2 pb-2 border-bottom">
+                                    <div class="d-flex align-items-center hover-pointer">
+                                        <img class="img-xs rounded-circle" src="@item.UserImage" alt="">
+                                        <div class="ml-2">
+                                            <p>@item.Description</p>
+                                        </div>
+                                    </div>
+                                    <a class="btn btn-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user-plus" data-toggle="tooltip" title="" data-original-title="Connect">
+                                            <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                            <circle cx="8.5" cy="7" r="4"></circle>
+                                            <line x1="20" y1="8" x2="20" y2="14"></line>
+                                            <line x1="23" y1="11" x2="17" y2="11"></line>
+                                        </svg>
+                                    </a>
+                                </div>
+                            }
+                            <div class="card-footer">
+                                <form asp-controller="Comment" asp-action="Create" method="post">
+                                    <div class="mb-3">
+                                        <label asp-for="Description" class="form-label">Contenido</label>
+                                        <textarea class="form-control" asp-for="Description" rows="4"></textarea>
+                                        <span asp-validation-for="Description" class="text-danger"></span>
+
+                                    </div>
+                                    <div class="mb-3">
+                                        <input class="form-control" type="hidden" asp-for="UserId" value="@user.Id" rows="4">
+                                    </div>
+                                    <div class="mb-3">
+                                        <input class="form-control" type="hidden" asp-for="Id" value="@null" rows="4">
+                                    </div>
+                                    <div class="mb-3">
+                                        <input class="form-control" type="hidden" asp-for="PostId" value="@post.Id" rows="4">
+                                    </div>                                   
+                                    <div class="mb-3">
+                                        <button class="form-control btn btn-info" type="submit" rows="2">Comentar</button>
+                                        <a asp-controller = "FriendShip" asp-action="Friends" class="form-control btn btn-secondary" rows="2">Volver</a>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
